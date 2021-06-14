@@ -149,4 +149,23 @@ class SearchPresenterTest {
         //Убеждаемся, что ответ от сервера обрабатывается корректно
         verify(viewContract, times(1)).displaySearchResults(searchResults, 101)
     }
+
+    @Test
+    fun viewContract_NotNull_afterOnAttach(){
+        val privateViewContract = presenter.javaClass.getDeclaredField("viewContract").apply {
+            this.isAccessible = true
+        }
+        val viewContract = privateViewContract.get(presenter)
+        assertNotNull(viewContract)
+    }
+
+    @Test
+    fun viewContract_Null_afterOnDetach() {
+        presenter.onDetach()
+        val privateViewContract = presenter.javaClass.getDeclaredField("viewContract").apply {
+            this.isAccessible = true
+        }
+        val viewContract = privateViewContract.get(presenter)
+        assertNull(viewContract)
+    }
 }
