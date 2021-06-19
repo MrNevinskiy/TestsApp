@@ -9,9 +9,8 @@ import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.geekbrains.tests.BuildConfig
 import com.geekbrains.tests.R
-import com.geekbrains.tests.view.search.MainActivity
+import com.geekbrains.tests.MainActivity
 import org.hamcrest.Matcher
 import org.junit.After
 import org.junit.Before
@@ -34,12 +33,16 @@ class MainActivityEspressoTest {
         onView(withId(R.id.searchEditText)).perform(replaceText("algol"), closeSoftKeyboard())
         onView(withId(R.id.searchEditText)).perform(pressImeActionButton())
 
-        if (BuildConfig.TYPE == MainActivity.FAKE) {
-            onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 42")))
-        } else {
-            onView(isRoot()).perform(delay())
-            onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 2283")))
-        }
+
+        onView(isRoot()).perform(delay())
+        onView(withId(R.id.detailsTotalCountTextView)).check(matches(withText("Number of results: 2283")))
+
+//        if (BuildConfig.TYPE == MainActivity.FAKE) {
+//            onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 42")))
+//        } else {
+//            onView(isRoot()).perform(delay())
+//            onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 2283")))
+//        }
     }
 
     private fun delay(): ViewAction? {

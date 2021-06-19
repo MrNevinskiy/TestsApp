@@ -41,13 +41,11 @@ android {
     productFlavors {
         fake {
             applicationIdSuffix ".fake"
-            versionNameSuffix "-fake"
-            buildConfigField "String", "TYPE", '"FAKE"'
+            versionNameSuffix ".fake"
         }
         real {
             applicationIdSuffix ".real"
-            versionNameSuffix "-real"
-            buildConfigField "String", "TYPE", '"REAL"'
+            versionNameSuffix ".real"
         }
     }
 }
