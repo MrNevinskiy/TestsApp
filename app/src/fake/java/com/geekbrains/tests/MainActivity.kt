@@ -2,8 +2,6 @@ package com.geekbrains.tests
 
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.widget.TextView.OnEditorActionListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.geekbrains.tests.model.SearchResult
@@ -15,8 +13,6 @@ import com.geekbrains.tests.view.details.DetailsActivity
 import com.geekbrains.tests.view.search.SearchResultAdapter
 import com.geekbrains.tests.view.search.ViewSearchContract
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
 class MainActivity : AppCompatActivity(), ViewSearchContract {
@@ -35,7 +31,7 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         toDetailsActivityButton.setOnClickListener {
             startActivity(DetailsActivity.getIntent(this, totalCount))
         }
-        setQueryListener()
+        searchText()
         setRecyclerView()
     }
 
@@ -44,34 +40,22 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         recyclerView.adapter = adapter
     }
 
-    private fun setQueryListener() {
-        searchEditText.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                val query = searchEditText.text.toString()
-                if (query.isNotBlank()) {
-                    presenter.searchGitHub(query)
-                    return@OnEditorActionListener true
-                } else {
-                    Toast.makeText(
-                        this@MainActivity,
-                        getString(R.string.enter_search_word),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    return@OnEditorActionListener false
-                }
+    private fun searchText() {
+        button_search.setOnClickListener {
+            val query = searchEditText.text.toString()
+            if (query.isNotBlank()) {
+                presenter.searchGitHub(query)
+            } else {
+                Toast.makeText(
+                    this@MainActivity,
+                    getString(R.string.enter_search_word),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            false
-        })
+        }
     }
 
     private fun createRepository(): RepositoryContract = FakeGitHubRepository()
-
-    private fun createRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
 
     override fun displaySearchResults(
         searchResults: List<SearchResult>,
@@ -103,8 +87,4 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         }
     }
 
-    companion object {
-        const val BASE_URL = "https://api.github.com"
-        const val FAKE = "FAKE"
-    }
 }

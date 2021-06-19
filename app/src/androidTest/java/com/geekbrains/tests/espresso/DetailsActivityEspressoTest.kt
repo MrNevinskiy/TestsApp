@@ -1,4 +1,4 @@
-package com.geekbrains.tests
+package com.geekbrains.tests.espresso
 
 import android.widget.TextView
 import androidx.lifecycle.Lifecycle
@@ -8,6 +8,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.geekbrains.tests.R
 import com.geekbrains.tests.view.details.DetailsActivity
 import junit.framework.TestCase
 import org.junit.After
@@ -40,7 +41,7 @@ class DetailsActivityEspressoTest {
     @Test
     fun activityTextView_NotNull() {
         scenario.onActivity {
-            val totalCountTextView = it.findViewById<TextView>(R.id.totalCountTextView)
+            val totalCountTextView = it.findViewById<TextView>(R.id.detailsTotalCountTextView)
             TestCase.assertNotNull(totalCountTextView)
         }
     }
@@ -48,17 +49,17 @@ class DetailsActivityEspressoTest {
     @Test
     fun activityTextView_HasText() {
         val assertion = matches(withText("Number of results: 0"))
-        onView(withId(R.id.totalCountTextView)).check(assertion)
+        onView(withId(R.id.detailsTotalCountTextView)).check(assertion)
     }
 
     @Test
     fun activityTextView_IsDisplayed() {
-        onView(withId(R.id.totalCountTextView)).check(matches(isDisplayed()))
+        onView(withId(R.id.detailsTotalCountTextView)).check(matches(isDisplayed()))
     }
 
     @Test
     fun activityTextView_IsCompletelyDisplayed() {
-        onView(withId(R.id.totalCountTextView)).check(matches(isCompletelyDisplayed()))
+        onView(withId(R.id.detailsTotalCountTextView)).check(matches(isCompletelyDisplayed()))
     }
 
     @Test
@@ -70,13 +71,13 @@ class DetailsActivityEspressoTest {
     @Test
     fun activityButtonIncrement_IsWorking() {
         onView(withId(R.id.incrementButton)).perform(click())
-        onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 1")))
+        onView(withId(R.id.detailsTotalCountTextView)).check(matches(withText("Number of results: 1")))
     }
 
     @Test
     fun activityButtonDecrement_IsWorking() {
         onView(withId(R.id.decrementButton)).perform(click())
-        onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: -1")))
+        onView(withId(R.id.detailsTotalCountTextView)).check(matches(withText("Number of results: -1")))
     }
 
     @After
