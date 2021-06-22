@@ -11,6 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.geekbrains.tests.R
 import com.geekbrains.tests.MainActivity
+import com.geekbrains.tests.TEST_SEARCH_STRING
 import org.hamcrest.Matcher
 import org.junit.After
 import org.junit.Before
@@ -30,13 +31,15 @@ class MainActivityEspressoTest {
     @Test
     fun activitySearch_IsWorking() {
         onView(withId(R.id.searchEditText)).perform(click())
-        onView(withId(R.id.searchEditText)).perform(replaceText("algol"), closeSoftKeyboard())
-        onView(withId(R.id.searchEditText)).perform(pressImeActionButton())
+        onView(withId(R.id.searchEditText)).perform(replaceText(TEST_SEARCH_STRING), closeSoftKeyboard())
+//        onView(withId(R.id.searchEditText)).perform(pressImeActionButton())
 
+        onView(withId(R.id.button_search)).perform(click())
 
         onView(isRoot()).perform(delay())
-        onView(withId(R.id.detailsTotalCountTextView)).check(matches(withText("Number of results: 2283")))
+//        onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 2283")))
 
+        onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 42")))
 //        if (BuildConfig.TYPE == MainActivity.FAKE) {
 //            onView(withId(R.id.totalCountTextView)).check(matches(withText("Number of results: 42")))
 //        } else {
