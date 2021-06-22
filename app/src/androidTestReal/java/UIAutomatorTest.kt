@@ -8,6 +8,9 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
 import androidx.test.uiautomator.Until
+import com.geekbrains.tests.TEST_NUMBER_OF_RESULTS_MINUS_5
+import com.geekbrains.tests.TEST_NUMBER_OF_RESULTS_PLUS_5
+import com.geekbrains.tests.TEST_TIMEOUT
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -49,7 +52,7 @@ class UIAutomatorTest {
             ?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
 
         context.startActivity(intent)
-        uiDevice.wait(Until.hasObject(By.pkg(packageName).depth(0)), TIMEOUT)
+        uiDevice.wait(Until.hasObject(By.pkg(packageName).depth(0)), TEST_TIMEOUT)
     }
 
     //Убеждаемся, что именно наше приложение открыто
@@ -78,7 +81,7 @@ class UIAutomatorTest {
         buttonSearch.click()
 
         val changedText = uiDevice.wait(
-            Until.findObject(By.res(packageName, "totalCountTextView")), TIMEOUT)
+            Until.findObject(By.res(packageName, "totalCountTextView")), TEST_TIMEOUT)
 
         val totalCount = changedText.text.toString()
         Assert.assertEquals(totalCount, NUMBER_OF_RESULTS)
@@ -91,7 +94,7 @@ class UIAutomatorTest {
         searchButton.click()
 
         val totalCountTextView = uiDevice.wait(
-            Until.findObject(By.res(packageName, "totalCountTextView")),TIMEOUT)
+            Until.findObject(By.res(packageName, "totalCountTextView")),TEST_TIMEOUT)
 
         Assert.assertNull(totalCountTextView)
     }
@@ -104,7 +107,7 @@ class UIAutomatorTest {
         toDetails.click()
 
         val changedText = uiDevice.wait(
-            Until.findObject(By.res(packageName, "detailsTotalCountTextView")), TIMEOUT)
+            Until.findObject(By.res(packageName, "detailsTotalCountTextView")), TEST_TIMEOUT)
 
         Assert.assertEquals(changedText.text, "Number of results: 0")
     }
@@ -119,7 +122,7 @@ class UIAutomatorTest {
         searchButton.click()
 
         val mainPageTextView = uiDevice.wait(
-            Until.findObject(By.res(packageName, "totalCountTextView")), TIMEOUT)
+            Until.findObject(By.res(packageName, "totalCountTextView")), TEST_TIMEOUT)
 
         val mainPageCount = mainPageTextView.text.toString()
 
@@ -127,7 +130,7 @@ class UIAutomatorTest {
         toDetails.click()
 
         val detailsPageTextView = uiDevice.wait(
-            Until.findObject(By.res(packageName, "detailsTotalCountTextView")), TIMEOUT)
+            Until.findObject(By.res(packageName, "detailsTotalCountTextView")), TEST_TIMEOUT)
 
         val detailsPageCount = detailsPageTextView.text.toString()
         Assert.assertEquals(detailsPageCount, mainPageCount)
@@ -140,13 +143,13 @@ class UIAutomatorTest {
         toDetails.click()
 
         val detailsPageTextView = uiDevice.wait(Until.findObject(By.res(packageName, "detailsTotalCountTextView")),
-            TIMEOUT)
+            TEST_TIMEOUT)
         val incrementButton = uiDevice.findObject(By.res(packageName, "incrementButton"))
 
         repeat((0.rangeTo(4)).count()) {
             incrementButton.click()
         }
-        Assert.assertEquals(detailsPageTextView.text.toString(), "Number of results: 5")
+        Assert.assertEquals(detailsPageTextView.text.toString(), TEST_NUMBER_OF_RESULTS_PLUS_5)
     }
 
     //Убеждаемся, что DetailsScreen decrementButton уменьшает значение detailsTotalCountTextView
@@ -157,7 +160,7 @@ class UIAutomatorTest {
         toDetails.click()
 
         val detailsPageTextView = uiDevice.wait(
-            Until.findObject(By.res(packageName, "detailsTotalCountTextView")), TIMEOUT
+            Until.findObject(By.res(packageName, "detailsTotalCountTextView")), TEST_TIMEOUT
         )
 
         val decrementButton = uiDevice.findObject(By.res(packageName, "decrementButton"))
@@ -166,12 +169,10 @@ class UIAutomatorTest {
             decrementButton.click()
         }
 
-        Assert.assertEquals(detailsPageTextView.text.toString(), "Number of results: -5")
+        Assert.assertEquals(detailsPageTextView.text.toString(), TEST_NUMBER_OF_RESULTS_MINUS_5)
     }
 
     companion object {
-        private const val TIMEOUT = 5000L
         private const val NUMBER_OF_RESULTS = "Number of results: 673"
     }
-
 }
