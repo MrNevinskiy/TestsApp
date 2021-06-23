@@ -1,8 +1,11 @@
 package com.geekbrains.tests
 
 import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.withId
 
 internal const val TEST_NUMBER = 42
 internal const val TEST_SEARCH_STRING = "algol"
@@ -18,3 +21,11 @@ fun view_isDisplayed(resId: Int){
         .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
 }
 
+fun loadList() {
+    onView(withId(R.id.searchEditText)).perform(click())
+    onView(withId(R.id.searchEditText)).perform(
+        replaceText("algol"),
+        closeSoftKeyboard()
+    )
+    onView(withId(R.id.searchEditText)).perform(pressImeActionButton())
+}
