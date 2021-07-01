@@ -5,7 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.geekbrains.tests.R
+
 class DetailsActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
@@ -17,7 +19,7 @@ class DetailsActivity : AppCompatActivity() {
             .commitAllowingStateLoss()
     }
     companion object {
-        private const val TOTAL_COUNT_EXTRA = "TOTAL_COUNT_EXTRA"
+        const val TOTAL_COUNT_EXTRA = "TOTAL_COUNT_EXTRA"
         fun getIntent(context: Context, totalCount: Int): Intent {
             return Intent(context, DetailsActivity::class.java).apply {
                 putExtra(TOTAL_COUNT_EXTRA, totalCount)

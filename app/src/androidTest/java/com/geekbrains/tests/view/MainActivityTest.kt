@@ -1,4 +1,4 @@
-package com.geekbrains.tests.view.search
+package com.geekbrains.tests.view
 
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +9,6 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
-import com.geekbrains.tests.MainActivity
 import com.geekbrains.tests.R
 import org.hamcrest.Description
 import org.hamcrest.Matcher

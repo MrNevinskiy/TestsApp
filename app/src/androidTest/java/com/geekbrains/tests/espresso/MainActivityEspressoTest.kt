@@ -10,7 +10,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.geekbrains.tests.R
-import com.geekbrains.tests.MainActivity
+import com.geekbrains.tests.view.MainActivity
 import com.geekbrains.tests.TEST_SEARCH_STRING
 import org.hamcrest.Matcher
 import org.junit.After
